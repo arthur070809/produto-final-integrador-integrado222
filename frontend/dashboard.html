@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Windspeed Racing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,500;0,700;0,900;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+
+    <!-- ═══ SIDEBAR ════════════════════════════════════════════════════════ -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <a href="index.html">Windspeed <span>RACING</span></a>
+        </div>
+
+        <nav class="sidebar-nav">
+            <ul>
+                <li class="active"><a href="dashboard.html">⬛ Dashboard</a></li>
+                <li><a href="index.html#equipe">👤 Equipe</a></li>
+                <li><a href="index.html#carro">🚗 O Carro</a></li>
+                <li><a href="index.html#fanzone">🏁 Fanzone</a></li>
+                <li><a href="#" onclick="logout()">🔒 Sair</a></li>
+            </ul>
+        </nav>
+
+        <div class="sidebar-season">
+            <span class="season-tag">TEMPORADA 2026</span>
+        </div>
+    </aside>
+
+    <!-- ═══ MAIN CONTENT ════════════════════════════════════════════════════ -->
+    <main class="dash-main">
+
+        <!-- TOPBAR -->
+        <header class="dash-topbar">
+            <div class="topbar-title">
+                <h1>Painel da Temporada</h1>
+                <p>Última atualização: <span id="last-updated">—</span></p>
+            </div>
+            <div class="topbar-actions">
+                <a href="index.html" class="btn-back">← Voltar ao Site</a>
+            </div>
+        </header>
+
+        <!-- ─── KPI CARDS ─────────────────────────────────────────────────── -->
+        <section id="kpi-section" class="kpi-grid">
+
+            <div class="kpi-card loading featured-kpi">
+                <span class="kpi-label">Posição no Campeonato</span>
+                <span class="kpi-value" id="kpi-position">—</span>
+                <span class="kpi-sub">Construtores 2026</span>
+            </div>
+
+            <div class="kpi-card loading">
+                <span class="kpi-label">Menor Tempo</span>
+                <span class="kpi-value" id="kpi-points">—</span>
+                <span class="kpi-sub">Total na temporada</span>
+            </div>
+
+            <div class="kpi-card loading">
+                <span class="kpi-label">Melhor Corredor</span>
+                <span class="kpi-value" id="kpi-podiums">—</span>
+                <span class="kpi-sub">Menor tempo na temporada</span>
+            </div>
+
+            <div class="kpi-card loading kpi-laps">
+                <span class="kpi-label">◎ Voltas Completadas</span>
+                <span class="kpi-value" id="kpi-laps">—</span>
+                <span class="kpi-sub">Ambos os pilotos · Temporada 2026</span>
+            </div>
+
+        </section>
+
+        <!-- ─── LINHA PRINCIPAL: RESULTADOS ───────────────────────────────── -->
+        <section id="results-section" class="dash-card dash-card--full">
+            <div class="dash-card-header">
+                <h2>Resultados das Corridas</h2>
+                <span class="badge">2026</span>
+            </div>
+            <div class="table-wrapper">
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>Corredor</th>
+                        </tr>
+                    </thead>
+                    <tbody id="results-tbody">
+                        <tr>
+                            <td colspan="1" class="loading-row">Carregando resultados...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ─── COMPARATIVO DE PILOTOS ────────────────────────────────────── -->
+        <section id="comparison-section" class="dash-card dash-card--full">
+            <div class="dash-card-header">
+                <h2>Comparativo de Pilotos</h2>
+                <span class="badge">Temporada 2026</span>
+            </div>
+            <div id="driver-comparison">
+                <p class="loading-row">Carregando comparativo...</p>
+            </div>
+        </section>
+
+        <!-- ─── REGISTRAR TEMPOS DE VOLTA ─────────────────────────────────── -->
+        <section id="register-lap-section" class="dash-card dash-card--full">
+            <div class="dash-card-header">
+                <h2>⏱ Registrar Tempos de Volta</h2>
+                <button class="btn-refresh" onclick="abrirRegistroTempo()">+ Nova Volta</button>
+            </div>
+            <div id="register-lap-content">
+                <p class="loading-row">Clique em "+ Nova Volta" para registrar tempos</p>
+            </div>
+        </section>
+
+        <footer class="dash-footer">
+            <p>&copy; 2026 Windspeed Racing · Dashboard Interno · (Site Fictício)</p>
+        </footer>
+
+    </main>
+
+    <!-- ═══ MODAL: REGISTRAR TEMPOS DE VOLTA ════════════════════════════════ -->
+    <div id="register-times-modal" class="modal-overlay" onclick="fecharRegistroTempo(event)">
+        <div class="modal-box">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <span class="modal-icon">⏱</span>
+                    <div>
+                        <h2 class="modal-title">Registrar Tempos de Volta</h2>
+                        <p class="modal-subtitle">Corrida <span id="register-corrida-num">—</span></p>
+                    </div>
+                </div>
+                <button class="modal-close" onclick="fecharRegistroTempo()">✕</button>
+            </div>
+
+            <div class="register-form">
+                <div class="form-group">
+                    <label>Número da Corrida (1-8):</label>
+                    <input type="number" id="register-corrida" min="1" max="8" value="1" class="form-control">
+                </div>
+
+                <div class="pilotos-tempos" id="pilotos-tempos">
+                    <!-- Gerado dinamicamente via JS -->
+                </div>
+
+                <div class="register-actions">
+                    <button class="btn-save" onclick="salvarTempos()">✓ Salvar Tempos</button>
+                    <button class="btn-cancel" onclick="fecharRegistroTempo()">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ MODAL: TEMPOS DE VOLTA ══════════════════════════════════════════ -->
+    <div id="lap-times-modal" class="modal-overlay" onclick="closeLapTimesModal(event)">
+        <div class="modal-box">
+
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <span class="modal-icon">⏱</span>
+                    <div>
+                        <h2 class="modal-title">Tempos de Volta</h2>
+                        <p class="modal-subtitle" id="modal-user-label">Carregando usuário...</p>
+                    </div>
+                </div>
+                <button class="modal-close" onclick="closeLapTimesModal()">✕</button>
+            </div>
+
+            <!-- ── SELETOR DE CORRIDAS (C1 … C8) ── -->
+            <div class="modal-corridas-wrap">
+                <span class="modal-corridas-label">Corrida:</span>
+                <div id="modal-corridas" class="modal-corridas-btns">
+                    <!-- botões gerados via JS -->
+                </div>
+            </div>
+
+            <!-- ── STATS DA CORRIDA SELECIONADA ── -->
+            <!-- ── STATS DA CORRIDA SELECIONADA ── -->
+            <div class="modal-stats" id="modal-stats">
+                <div class="mstat">
+                    <span class="mstat-label">Total de Voltas</span>
+                    <span class="mstat-value" id="mstat-total">—</span>
+                </div>
+                <div class="mstat mstat--highlight">
+                    <span class="mstat-label">🏆 Melhor Tempo</span>
+                    <span class="mstat-value" id="mstat-best">—</span>
+                </div>
+                <div class="mstat">
+                    <span class="mstat-label">Tempo Médio</span>
+                    <span class="mstat-value" id="mstat-avg">—</span>
+                </div>
+                <div class="mstat">
+                    <span class="mstat-label">Último Tempo</span>
+                    <span class="mstat-value" id="mstat-last">—</span>
+                </div>
+                <!-- ADICIONE ESTE CARD -->
+                <div class="mstat mstat--soma">
+                    <span class="mstat-label">⏱ Soma da Corrida</span>
+                    <span class="mstat-value" id="mstat-soma">—</span>
+                </div>
+            </div>
+
+            <!-- ── MÉDIAS GERAIS POR CORRIDA ── -->
+            <div class="modal-medias-wrap">
+                <span class="modal-medias-label">📊 Médias por Corrida</span>
+                <div id="modal-medias">
+                    <!-- gerado via JS -->
+                </div>
+            </div>
+
+            <!-- ── TABELA DE VOLTAS ── -->
+            <div class="modal-body">
+                <div class="modal-table-header">
+                    <span>Lista de Voltas Registradas</span>
+                    <span id="modal-lap-count" class="modal-count-badge">0 voltas</span>
+                </div>
+                <div class="modal-table-wrap">
+                    <table class="results-table modal-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Data</th>
+                                <th>Tempo</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="modal-tbody">
+                            <tr>
+                                <td colspan="4" class="loading-row">Carregando...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn-lap-times" onclick="registrarVolta()">🏁 Registrar Volta</button>
+                <button class="btn-modal-close" onclick="closeLapTimesModal()">Fechar</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="api-mock.js"></script>
+    <script src="dashboard.js"></script>
+    <script>
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('usuario');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+
+</html>
