@@ -216,6 +216,14 @@ ul { list-style: none; }
     overflow: hidden;
 }
 
+.kpi-card .kpi-value {
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: unset;
+    font-size: clamp(0.9rem, 1.75vw, 2.2rem);
+    line-height: 1.2;
+}
+
 .kpi-card:hover { transform: translateY(-3px); border-color: rgba(255, 46, 136, 0.25); }
 
 .kpi-card.loading .kpi-value {
