@@ -15,14 +15,14 @@ document.addEventListener("DOMContentLoaded", async () => {
                 fetch(`${API_URL}/corredores`)
             ]);
 
+            if (!voltasRes.ok || !corredoresRes.ok) throw new Error('Erro ao buscar dados');
+
             const voltas = await voltasRes.json();
             const corredores = await corredoresRes.json();
 
             const tempos = voltas.map(v => parseFloat(v.tempo)).filter(t => !isNaN(t));
             const melhorTempo = tempos.length ? Math.min(...tempos).toFixed(2) + 's' : '—';
 
-            // Número de corridas distintas já realizadas
-            // Corredor com menor tempo
             const melhorCorredor = corredores.map(c => {
                 const temposCorredor = voltas
                     .filter(v => String(v.corredores_id) === String(c.id))
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             document.getElementById("kpi-position").textContent = `${1}`;
             document.getElementById("kpi-points").textContent = melhorTempo;
             document.getElementById("kpi-podiums").textContent = melhorCorredor ? melhorCorredor.nome : '—';
-            document.getElementById("kpi-laps").textContent = `${8}`;
+            document.getElementById("kpi-laps").textContent = `${voltas.length}`;
 
             document.querySelectorAll(".kpi-card").forEach(c => c.classList.remove("loading"));
         } catch (err) {
@@ -53,6 +53,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                 fetch(`${API_URL}/usuarios`)
             ]);
 
+            if (!voltasRes.ok || !corredoresRes.ok || !usuariosRes.ok) {
+                throw new Error('Erro ao buscar dados');
+            }
+
             const voltas = await voltasRes.json();
             const todosCorredores = await corredoresRes.json();
             const usuarios = await usuariosRes.json();
@@ -68,7 +72,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 return;
             }
 
-            // Agrupa melhor tempo por corrida e corredor
             const corridasMap = {};
             voltas.forEach(v => {
                 const num = v.corrida_num || 1;
@@ -81,7 +84,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 }
             });
 
-            // Atualiza cabeçalho com nome de cada corredor
             const thead = document.querySelector("#results-section thead tr");
             if (thead) {
                 thead.innerHTML = `
@@ -102,7 +104,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const todos = Object.values(corrida).map(c => c.melhor).filter(t => !isNaN(t));
                 const melhor = todos.length ? Math.min(...todos).toFixed(2) + 's' : '—';
 
-                // Soma total de cada corredor nesta corrida
                 const celulas = corredores.map(c => {
                     const dado = corrida[c.id];
                     return `<td class="td-points">${dado ? dado.melhor.toFixed(2) + 's' : '—'}</td>`;
@@ -118,7 +119,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 `;
             }).join('');
 
-            // ── Linha de SOMA TOTAL ──────────────────────────────────────────
             const somaRow = corredores.map(c => {
                 const somaTotal = voltas
                     .filter(v => String(v.corredores_id) === String(c.id))
@@ -151,6 +151,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                 fetch(`${API_URL}/corredores`),
                 fetch(`${API_URL}/usuarios`)
             ]);
+
+            if (!voltasRes.ok || !corredoresRes.ok || !usuariosRes.ok) {
+                throw new Error('Erro ao buscar dados');
+            }
 
             const voltas = await voltasRes.json();
             const todosCorredores = await corredoresRes.json();
@@ -205,6 +209,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                 fetch(`${API_URL}/corredores`),
                 fetch(`${API_URL}/usuarios`)
             ]);
+
+            if (!voltasRes.ok || !corredoresRes.ok || !usuariosRes.ok) {
+                throw new Error('Erro ao buscar dados');
+            }
 
             const voltas = await voltasRes.json();
             const todosCorredores = await corredoresRes.json();
@@ -276,8 +284,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 const API_URL = 'http://localhost:3000';
-
-// Número da corrida selecionada no modal (1–8)
 let corridaSelecionada = 1;
 
 async function openLapTimesModal() {
@@ -305,24 +311,21 @@ async function openLapTimesModal() {
     await carregarModalCompleto(usuario);
 }
 
-// ─── Carrega voltas + médias do usuário ───────────────────────────────────────
 async function carregarModalCompleto(usuario) {
     document.getElementById('modal-tbody').innerHTML =
         `<tr><td colspan="4" class="loading-row">Carregando voltas...</td></tr>`;
     resetModalStats();
 
     try {
-        // Busca o corredores_id correto via API para evitar dados desatualizados no localStorage
         let corredorId = usuario.corredores_id;
 
         if (!corredorId) {
-            // Tenta buscar pelo usuario_id na lista de corredores
             const corrRes = await fetch(`${API_URL}/corredores`);
+            if (!corrRes.ok) throw new Error('Erro ao buscar corredores');
             const corredores = await corrRes.json();
             const meu = corredores.find(c => String(c.usuario_id) === String(usuario.id));
             if (meu) {
                 corredorId = meu.id;
-                // Atualiza localStorage para as próximas vezes
                 usuario.corredores_id = corredorId;
                 localStorage.setItem('usuario', JSON.stringify(usuario));
             }
@@ -334,11 +337,12 @@ async function carregarModalCompleto(usuario) {
             return;
         }
 
-        // Busca voltas e médias em paralelo
         const [voltasRes, mediasRes] = await Promise.all([
             fetch(`${API_URL}/voltas`),
             fetch(`${API_URL}/voltas/medias`)
         ]);
+
+        if (!voltasRes.ok || !mediasRes.ok) throw new Error('Erro ao buscar dados');
 
         const todasVoltas = await voltasRes.json();
         const medias = await mediasRes.json();
@@ -347,14 +351,11 @@ async function carregarModalCompleto(usuario) {
             String(v.corredores_id) === String(corredorId)
         );
 
-        // Renderiza seletor de corridas
         renderCorridas(minhasVoltas, corredorId);
 
-        // Renderiza médias gerais
         const meusDados = medias.find(m => String(m.id) === String(corredorId));
         renderMediasSection(meusDados);
 
-        // Renderiza tabela da corrida selecionada
         const voltasDaCorrida = minhasVoltas.filter(v => v.corrida_num === corridaSelecionada);
         renderModalStats(minhasVoltas, voltasDaCorrida);
         renderModalTable(voltasDaCorrida);
@@ -366,7 +367,6 @@ async function carregarModalCompleto(usuario) {
     }
 }
 
-// ─── Renderiza os botões de seleção de corrida ────────────────────────────────
 function renderCorridas(voltas, corredorId) {
     const container = document.getElementById('modal-corridas');
     if (!container) return;
@@ -386,17 +386,16 @@ function renderCorridas(voltas, corredorId) {
     }).join('');
 }
 
-// ─── Troca corrida selecionada e recarrega tabela ─────────────────────────────
 async function selecionarCorrida(num, corredorId) {
     corridaSelecionada = num;
 
-    // Atualiza botões
     document.querySelectorAll('.corrida-btn').forEach((btn, i) => {
         btn.classList.toggle('corrida-btn--active', i + 1 === num);
     });
 
     try {
         const voltasRes = await fetch(`${API_URL}/voltas`);
+        if (!voltasRes.ok) throw new Error('Erro ao buscar voltas');
         const todasVoltas = await voltasRes.json();
 
         const minhasVoltas = todasVoltas.filter(v => String(v.corredores_id) === String(corredorId));
@@ -409,7 +408,6 @@ async function selecionarCorrida(num, corredorId) {
     }
 }
 
-// ─── Seção de médias gerais ───────────────────────────────────────────────────
 function renderMediasSection(dados) {
     const container = document.getElementById('modal-medias');
     if (!container) return;
@@ -421,7 +419,6 @@ function renderMediasSection(dados) {
 
     const g = dados.geral;
 
-    // Monta linha por corrida
     const corridasHtml = dados.corridas.map(c => {
         const soma = (parseFloat(c.media_tempo) * c.total_voltas).toFixed(2);
         return `
@@ -448,7 +445,6 @@ function renderMediasSection(dados) {
     `;
 }
 
-// ─── Stats do modal ───────────────────────────────────────────────────────────
 function resetModalStats() {
     ['mstat-total', 'mstat-best', 'mstat-avg', 'mstat-last', 'mstat-soma'].forEach(id => {
         const el = document.getElementById(id);
@@ -458,7 +454,6 @@ function resetModalStats() {
     if (badge) badge.textContent = '0 voltas';
 }
 
-// minhasVoltas = todas as voltas do corredor; voltasDaCorrida = só da corrida atual
 function renderModalStats(minhasVoltas, voltasDaCorrida) {
     const badge = document.getElementById('modal-lap-count');
     if (badge) badge.textContent = `${voltasDaCorrida.length} volta${voltasDaCorrida.length !== 1 ? 's' : ''} na corrida ${corridaSelecionada}`;
@@ -466,7 +461,7 @@ function renderModalStats(minhasVoltas, voltasDaCorrida) {
     document.getElementById('mstat-total').textContent = minhasVoltas.length;
 
     if (!voltasDaCorrida.length) {
-        ['mstat-best', 'mstat-avg', 'mstat-last'].forEach(id => {
+        ['mstat-best', 'mstat-avg', 'mstat-last', 'mstat-soma'].forEach(id => {
             document.getElementById(id).textContent = '—';
         });
         return;
@@ -519,7 +514,6 @@ function renderModalTable(voltas) {
     }).join('');
 }
 
-// ─── Registrar volta (na corrida selecionada) ─────────────────────────────────
 async function registrarVolta() {
     let usuario = null;
     try {
@@ -532,11 +526,11 @@ async function registrarVolta() {
         return;
     }
 
-    // Garante corredores_id atualizado
     let corredorId = usuario.corredores_id;
     if (!corredorId) {
         try {
             const corrRes = await fetch(`${API_URL}/corredores`);
+            if (!corrRes.ok) throw new Error('Erro ao buscar corredores');
             const corredores = await corrRes.json();
             const meu = corredores.find(c => String(c.usuario_id) === String(usuario.id));
             if (meu) {
@@ -559,11 +553,11 @@ async function registrarVolta() {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-            tempo,
-            data: new Date().toISOString().slice(0, 19).replace('T', ' '), 
-            corredores_id: corredorId,
-            corrida_num: corridaSelecionada 
-})
+                tempo,
+                data: new Date().toISOString().slice(0, 19).replace('T', ' '),
+                corredores_id: corredorId,
+                corrida_num: corridaSelecionada
+            })
         });
 
         if (!res.ok) {
@@ -571,16 +565,15 @@ async function registrarVolta() {
             throw new Error(err.error || 'Erro ao registrar volta');
         }
 
-        // Recarrega tudo no modal
+        alert('✓ Volta registrada com sucesso!');
         await carregarModalCompleto(usuario);
 
     } catch (err) {
         console.error('[Modal] Erro ao registrar volta:', err);
-        alert(`Não foi possível registrar a volta: ${err.message}`);
+        alert(`❌ Não foi possível registrar a volta: ${err.message}`);
     }
 }
 
-// ─── Fechar modal ─────────────────────────────────────────────────────────────
 function closeLapTimesModal(event) {
     if (event && event.target !== document.getElementById('lap-times-modal')) return;
     const modal = document.getElementById('lap-times-modal');
@@ -595,6 +588,11 @@ document.addEventListener('keydown', e => {
             modal.classList.remove('modal--open');
             document.body.style.overflow = '';
         }
+
+        const registerModal = document.getElementById('register-times-modal');
+        if (registerModal && registerModal.classList.contains('modal--open')) {
+            fecharRegistroTempo();
+        }
     }
 });
 
@@ -605,31 +603,38 @@ document.addEventListener('keydown', e => {
 async function abrirRegistroTempo() {
     const modal = document.getElementById('register-times-modal');
     if (!modal) return;
-    
+
     modal.classList.add('modal--open');
     document.body.style.overflow = 'hidden';
-    
-    // Carrega lista de corredores
+
+    // Atualiza número da corrida no modal
+    const numeroInput = document.getElementById('register-corrida');
+    if (numeroInput) {
+        document.getElementById('register-corrida-num').textContent = numeroInput.value;
+    }
+
     try {
         const res = await fetch(`${API_URL}/corredores`);
+        if (!res.ok) throw new Error('Erro ao buscar corredores');
         const corredores = await res.json();
-        
+
         const container = document.getElementById('pilotos-tempos');
         if (container) {
             container.innerHTML = corredores.map((c, idx) => `
                 <div class="piloto-tempo-item">
                     <label>${c.nome}</label>
-                    <input type="number" 
-                           class="piloto-tempo-input form-control" 
-                           data-corredor-id="${c.id}" 
-                           placeholder="ex: 71.45" 
-                           step="0.01" 
+                    <input type="number"
+                           class="piloto-tempo-input form-control"
+                           data-corredor-id="${c.id}"
+                           placeholder="ex: 71.45"
+                           step="0.01"
                            min="0">
                 </div>
             `).join('');
         }
     } catch (err) {
         console.error('[Registro] Erro ao carregar corredores:', err);
+        alert('❌ Erro ao carregar corredores');
     }
 }
 
@@ -642,79 +647,100 @@ function fecharRegistroTempo(event) {
     }
 }
 
+// Atualizar número da corrida em tempo real
+document.addEventListener('DOMContentLoaded', () => {
+    const corridaInput = document.getElementById('register-corrida');
+    if (corridaInput) {
+        corridaInput.addEventListener('change', (e) => {
+            document.getElementById('register-corrida-num').textContent = e.target.value;
+        });
+    }
+});
+
 async function salvarTempos() {
     try {
         const corridaNum = parseInt(document.getElementById('register-corrida').value);
-        
+
         if (!corridaNum || corridaNum < 1 || corridaNum > 8) {
-            alert('Selecione um número de corrida válido (1-8)');
+            alert('❌ Selecione um número de corrida válido (1-8)');
             return;
         }
-        
+
         const inputs = document.querySelectorAll('.piloto-tempo-input');
         const temposParaSalvar = [];
-        
+
         inputs.forEach(input => {
             const corredorId = parseInt(input.dataset.corredorId);
             const tempo = parseFloat(input.value);
-            
+
             if (tempo && !isNaN(tempo) && tempo > 0) {
                 temposParaSalvar.push({ corredorId, tempo, corridaNum });
             }
         });
-        
+
         if (temposParaSalvar.length === 0) {
-            alert('Insira pelo menos um tempo válido');
+            alert('❌ Insira pelo menos um tempo válido');
             return;
         }
-        
+
+        // Desabilita botão enquanto salva
+        const btnSave = document.querySelector('.btn-save');
+        const btnCancel = document.querySelector('.btn-cancel');
+        btnSave.disabled = true;
+        btnCancel.disabled = true;
+        btnSave.textContent = '⏳ Salvando...';
+
         let sucessos = 0;
+        let erros = [];
+
         for (const dados of temposParaSalvar) {
-            const res = await fetch(`${API_URL}/voltas/create`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                tempo: dados.tempo.toFixed(2),
-                data: new Date().toISOString().slice(0, 19).replace('T', ' '),
-                corredores_id: dados.corredorId,
-                corrida_num: dados.corridaNum
-})
-            });
-            
-            const json = await res.json();
-            if (res.ok) {
-                sucessos++;
-            } else {
-                console.error('[Registro] Erro:', json.error);
+            try {
+                const res = await fetch(`${API_URL}/voltas/create`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        tempo: dados.tempo.toFixed(2),
+                        data: new Date().toISOString().slice(0, 19).replace('T', ' '),
+                        corredores_id: dados.corredorId,
+                        corrida_num: dados.corridaNum
+                    })
+                });
+
+                const json = await res.json();
+                if (res.ok) {
+                    sucessos++;
+                } else {
+                    erros.push(json.error || 'Erro desconhecido');
+                    console.error('[Registro] Erro:', json.error);
+                }
+            } catch (err) {
+                erros.push(err.message);
+                console.error('[Registro] Erro de conexão:', err);
             }
         }
-        
+
+        // Re-habilita botões
+        btnSave.disabled = false;
+        btnCancel.disabled = false;
+        btnSave.textContent = '✓ Salvar Tempos';
+
         if (sucessos > 0) {
-            alert(`✓ ${sucessos} tempo(s) registrado(s) com sucesso!`);
+            alert(`✅ ${sucessos} tempo(s) registrado(s) com sucesso!\n\n${erros.length > 0 ? '⚠️ ' + erros.length + ' erro(s):\n' + erros.join('\n') : ''}`);
             fecharRegistroTempo();
-            
+
             // Limpa inputs
             document.querySelectorAll('.piloto-tempo-input').forEach(input => input.value = '');
-            
+
             // Aguarda um pouco e recarrega dados
             setTimeout(() => {
                 window.location.reload();
-            }, 1000);
+            }, 1500);
         } else {
-            alert('❌ Nenhum tempo foi registrado. Verifique os dados e tente novamente.');
+            alert('❌ Nenhum tempo foi registrado. Verifique os dados e tente novamente.\n\nErros:\n' + erros.join('\n'));
         }
-        
+
     } catch (err) {
         console.error('[Registro] Erro ao salvar tempos:', err);
-        alert(`Erro ao registrar tempos: ${err.message}`);
+        alert(`❌ Erro ao registrar tempos: ${err.message}`);
     }
 }
-
-document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') {
-        const modal = document.getElementById('register-times-modal');
-        if (modal && modal.classList.contains('modal--open')) {
-            fecharRegistroTempo();
-        }
-    }
-});
