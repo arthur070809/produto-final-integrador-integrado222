@@ -116,10 +116,10 @@
         <section id="register-lap-section" class="dash-card dash-card--full">
             <div class="dash-card-header">
                 <h2>⏱ Registrar Tempos de Volta</h2>
-                <button class="btn-refresh" onclick="abrirRegistroTempo()">+ Nova Volta</button>
+                <button class="btn-refresh" onclick="abrirRegistroTempo()">Registrar 8 Voltas</button>
             </div>
             <div id="register-lap-content">
-                <p class="loading-row">Clique em "+ Nova Volta" para registrar tempos</p>
+                <p class="loading-row">Clique em "Registrar 8 Voltas" para salvar os tempos de todos os corredores.</p>
             </div>
         </section>
 
@@ -131,30 +131,25 @@
 
     <!-- ═══ MODAL: REGISTRAR TEMPOS DE VOLTA ════════════════════════════════ -->
     <div id="register-times-modal" class="modal-overlay" onclick="fecharRegistroTempo(event)">
-        <div class="modal-box">
+        <div class="modal-box modal-box--wide">
             <div class="modal-header">
                 <div class="modal-title-wrap">
                     <span class="modal-icon">⏱</span>
                     <div>
-                        <h2 class="modal-title">Registrar Tempos de Volta</h2>
-                        <p class="modal-subtitle">Corrida <span id="register-corrida-num">—</span></p>
+                        <h2 class="modal-title">Registrar 8 Voltas</h2>
+                        <p class="modal-subtitle">Preencha os tempos dos corredores em segundos</p>
                     </div>
                 </div>
                 <button class="modal-close" onclick="fecharRegistroTempo()">✕</button>
             </div>
 
             <div class="register-form">
-                <div class="form-group">
-                    <label>Número da Corrida (1-8):</label>
-                    <input type="number" id="register-corrida" min="1" max="8" value="1" class="form-control">
-                </div>
-
                 <div class="pilotos-tempos" id="pilotos-tempos">
                     <!-- Gerado dinamicamente via JS -->
                 </div>
 
                 <div class="register-actions">
-                    <button class="btn-save" onclick="salvarTempos()">✓ Salvar Tempos</button>
+                    <button class="btn-save" onclick="salvarTempos()">Salvar Voltas</button>
                     <button class="btn-cancel" onclick="fecharRegistroTempo()">Cancelar</button>
                 </div>
             </div>

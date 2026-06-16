@@ -431,6 +431,10 @@ ul { list-style: none; }
     transform: translateY(0) scale(1);
 }
 
+.modal-box--wide {
+    max-width: 1100px;
+}
+
 /* ── Header do modal ─────────────────────────────────────────── */
 .modal-header {
     display: flex;
@@ -698,13 +702,39 @@ ul { list-style: none; }
 }
 
 .pilotos-tempos {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     margin: 20px 0;
-    max-height: 400px;
-    overflow-y: auto;
-    padding-right: 10px;
+    max-height: 55vh;
+    overflow: auto;
+    padding-right: 8px;
+}
+
+.registro-grid {
+    display: grid;
+    grid-template-columns: minmax(150px, 1.4fr) repeat(8, minmax(82px, 1fr));
+    gap: 8px;
+    min-width: 860px;
+    align-items: center;
+}
+
+.registro-grid--header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background: #171d31;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.registro-grid--header span {
+    color: var(--text-muted);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
 }
 
 .piloto-tempo-item {
@@ -712,10 +742,6 @@ ul { list-style: none; }
     border: 1px solid rgba(138, 43, 226, 0.2);
     border-radius: 6px;
     padding: 12px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    align-items: center;
 }
 
 .piloto-tempo-item label {

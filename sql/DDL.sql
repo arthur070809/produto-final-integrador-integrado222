@@ -67,7 +67,7 @@ INSERT INTO corredores (nome, turma, usuario_id) VALUES
 
 -- Voltas de exemplo distribuídas em 3 corridas
 -- Voltas: 8 tempos por corredor (8 corredores × 8 corridas = 64 voltas)
-INSERT INTO voltas (tempo, data, corredores_id, corrida_num) VALUES
+/*INSERT INTO voltas (tempo, data, corredores_id, corrida_num) VALUES
 -- Piloto A (id=1)
 (100.35, '2026-06-15 12:00:00', 1, 1),
 (71.50, '2026-06-15 12:05:00', 1, 2),

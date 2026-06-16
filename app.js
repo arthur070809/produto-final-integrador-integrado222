@@ -10,6 +10,12 @@ const server = http.createServer(app); // HTTP server que o WS vai usar
 // ─── WebSocket Server ─────────────────────────────────────────────────────────
 const wss = new WebSocket.Server({ server });
 
+wss.on('error', (err) => {
+  if (err.code !== 'EADDRINUSE') {
+    console.error('Erro no WebSocket:', err.message);
+  }
+});
+
 // Estado global da corrida
 const estadoCorrida = {
   ativa: false,
@@ -73,6 +79,10 @@ app.locals.corrida = {
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'frontend')));
 app.use(express.json());
+
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok' });
+});
 
 // ─── Rotas ────────────────────────────────────────────────────────────────────
 const userRoutes      = require('./routes/users');

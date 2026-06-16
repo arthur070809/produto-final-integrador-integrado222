@@ -607,12 +607,6 @@ async function abrirRegistroTempo() {
     modal.classList.add('modal--open');
     document.body.style.overflow = 'hidden';
 
-    // Atualiza número da corrida no modal
-    const numeroInput = document.getElementById('register-corrida');
-    if (numeroInput) {
-        document.getElementById('register-corrida-num').textContent = numeroInput.value;
-    }
-
     try {
         const res = await fetch(`${API_URL}/corredores`);
         if (!res.ok) throw new Error('Erro ao buscar corredores');
@@ -620,17 +614,26 @@ async function abrirRegistroTempo() {
 
         const container = document.getElementById('pilotos-tempos');
         if (container) {
-            container.innerHTML = corredores.map((c, idx) => `
-                <div class="piloto-tempo-item">
-                    <label>${c.nome}</label>
-                    <input type="number"
-                           class="piloto-tempo-input form-control"
-                           data-corredor-id="${c.id}"
-                           placeholder="ex: 71.45"
-                           step="0.01"
-                           min="0">
+            container.innerHTML = `
+                <div class="registro-grid registro-grid--header">
+                    <span>Corredor</span>
+                    ${Array.from({ length: 8 }, (_, i) => `<span>Volta ${i + 1}</span>`).join('')}
                 </div>
-            `).join('');
+                ${corredores.map(c => `
+                    <div class="registro-grid piloto-tempo-item">
+                        <label>${c.nome}</label>
+                        ${Array.from({ length: 8 }, (_, i) => `
+                            <input type="number"
+                                   class="piloto-tempo-input form-control"
+                                   data-corredor-id="${c.id}"
+                                   data-corrida-num="${i + 1}"
+                                   placeholder="0.00"
+                                   step="0.01"
+                                   min="0">
+                        `).join('')}
+                    </div>
+                `).join('')}
+            `;
         }
     } catch (err) {
         console.error('[Registro] Erro ao carregar corredores:', err);
@@ -647,21 +650,9 @@ function fecharRegistroTempo(event) {
     }
 }
 
-// Atualizar número da corrida em tempo real
-document.addEventListener('DOMContentLoaded', () => {
-    const corridaInput = document.getElementById('register-corrida');
-    if (corridaInput) {
-        corridaInput.addEventListener('change', (e) => {
-            document.getElementById('register-corrida-num').textContent = e.target.value;
-        });
-    }
-});
-
-async function salvarTempos() {
+async function salvarTemposLegacy() {
     try {
-        const corridaNum = parseInt(document.getElementById('register-corrida').value);
-
-        if (!corridaNum || corridaNum < 1 || corridaNum > 8) {
+        if (false) {
             alert('❌ Selecione um número de corrida válido (1-8)');
             return;
         }
@@ -671,9 +662,10 @@ async function salvarTempos() {
 
         inputs.forEach(input => {
             const corredorId = parseInt(input.dataset.corredorId);
+            const corridaNum = parseInt(input.dataset.corridaNum);
             const tempo = parseFloat(input.value);
 
-            if (tempo && !isNaN(tempo) && tempo > 0) {
+            if (corredorId && corridaNum && tempo && !isNaN(tempo) && tempo > 0) {
                 temposParaSalvar.push({ corredorId, tempo, corridaNum });
             }
         });
@@ -722,7 +714,7 @@ async function salvarTempos() {
         // Re-habilita botões
         btnSave.disabled = false;
         btnCancel.disabled = false;
-        btnSave.textContent = '✓ Salvar Tempos';
+        btnSave.textContent = 'Salvar Voltas';
 
         if (sucessos > 0) {
             alert(`✅ ${sucessos} tempo(s) registrado(s) com sucesso!\n\n${erros.length > 0 ? '⚠️ ' + erros.length + ' erro(s):\n' + erros.join('\n') : ''}`);
@@ -743,4 +735,74 @@ async function salvarTempos() {
         console.error('[Registro] Erro ao salvar tempos:', err);
         alert(`❌ Erro ao registrar tempos: ${err.message}`);
     }
+}
+
+async function salvarTempos() {
+    const inputs = document.querySelectorAll('.piloto-tempo-input');
+    const temposParaSalvar = [];
+
+    inputs.forEach(input => {
+        const corredorId = parseInt(input.dataset.corredorId);
+        const corridaNum = parseInt(input.dataset.corridaNum);
+        const tempo = parseFloat(input.value);
+
+        if (corredorId && corridaNum && tempo && !isNaN(tempo) && tempo > 0) {
+            temposParaSalvar.push({ corredorId, corridaNum, tempo });
+        }
+    });
+
+    if (temposParaSalvar.length === 0) {
+        alert('Insira pelo menos um tempo valido.');
+        return;
+    }
+
+    const btnSave = document.querySelector('.btn-save');
+    const btnCancel = document.querySelector('.btn-cancel');
+    const textoOriginal = btnSave.textContent;
+
+    btnSave.disabled = true;
+    btnCancel.disabled = true;
+    btnSave.textContent = 'Salvando...';
+
+    const dataRegistro = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    let sucessos = 0;
+    const erros = [];
+
+    for (const dados of temposParaSalvar) {
+        try {
+            const res = await fetch(`${API_URL}/voltas/create`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    tempo: dados.tempo.toFixed(2),
+                    data: dataRegistro,
+                    corredores_id: dados.corredorId,
+                    corrida_num: dados.corridaNum
+                })
+            });
+
+            const json = await res.json();
+            if (res.ok) {
+                sucessos++;
+            } else {
+                erros.push(json.error || 'Erro desconhecido');
+            }
+        } catch (err) {
+            erros.push(err.message);
+        }
+    }
+
+    btnSave.disabled = false;
+    btnCancel.disabled = false;
+    btnSave.textContent = textoOriginal;
+
+    if (sucessos > 0) {
+        alert(`${sucessos} tempo(s) registrado(s) com sucesso.${erros.length ? `\n${erros.length} erro(s):\n${erros.join('\n')}` : ''}`);
+        fecharRegistroTempo();
+        document.querySelectorAll('.piloto-tempo-input').forEach(input => input.value = '');
+        window.location.reload();
+        return;
+    }
+
+    alert(`Nenhum tempo foi registrado.\n${erros.join('\n')}`);
 }
