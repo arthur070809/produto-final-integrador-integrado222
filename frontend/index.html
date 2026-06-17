@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Windspeed | F1 Team</title>
+    <title>Windspeed Racing | F1 Team - Domínio Total</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,500;0,700;0,900;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <!-- ═══════════════════════ NAVBAR ════════════════════════════════════ -->
     <header class="navbar">
         <div class="nav-container">
             <div class="logo">
@@ -18,10 +20,13 @@
             </div>
             <nav>
                 <ul class="nav-links">
-                    <li><a href="#home"    class="nav-item">Início</a></li>
-                    <li><a href="#equipe"  class="nav-item">A Equipe</a></li>
-                    <li><a href="#carro"   class="nav-item">O Carro</a></li>
-                    <li><a href="#stats"   class="nav-item">Temporada</a></li>
+                    <li><a href="#home" class="nav-item">Início</a></li>
+                    <li><a href="#equipe" class="nav-item">Equipe</a></li>
+                    <li><a href="#carro" class="nav-item">O Carro</a></li>
+                    <li><a href="#stats" class="nav-item">Temporada</a></li>
+                    <li><a href="#blog" class="nav-item">Notícias</a></li>
+                    <li><a href="#galeria" class="nav-item">Galeria</a></li>
+                    <li><a href="#timeline" class="nav-item">História</a></li>
                     <li><a href="#fanzone" class="nav-item">Fanzone</a></li>
                     <li><a href="dashboard.html" class="nav-item nav-dashboard">⬛ Dashboard</a></li>
                 </ul>
@@ -34,178 +39,600 @@
         </div>
     </header>
 
-    <!-- ═══════════════════════ HERO ═══════════════════════════════════════ -->
+    <!-- ═══════════════════════ HERO ═════════════════════════════════════ -->
     <section id="home" class="hero">
+        <div class="stars"></div>
+        <div class="hero-blur-1"></div>
+        <div class="hero-blur-2"></div>
+        
         <div class="hero-content">
-            <h1>DOMÍNIO ABSOLUTO.<br><span>VELOCIDADE PURA.</span></h1>
-            <p>Conheça a equipe que está redefinindo os limites da física e da engenharia nas pistas de Fórmula 1.</p>
-            <a href="#equipe" class="btn-cta nav-item">Descubra a Windspeed</a>
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="neon-text">DOMÍNIO</span><br>
+                    <span class="neon-text-2">ABSOLUTO</span>
+                </h1>
+                <p class="hero-subtitle">A velocidade não tem limite. A precisão é uma arma.</p>
+                <p class="hero-desc">Conheça a Windspeed Racing — a equipe que está redefinindo os limites da Fórmula 1.</p>
+                
+                <div class="hero-buttons">
+                    <a href="#equipe" class="btn-primary">
+                        <span>Descubra a Equipe</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="dashboard.html" class="btn-secondary">
+                        <span>Dashboard</span>
+                        <i class="fas fa-tachometer-alt"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="neon-circle"></div>
+                <div class="neon-square"></div>
+                <div class="floating-box"></div>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <i class="fas fa-chevron-down"></i>
         </div>
     </section>
 
-    <!-- ═══════════════════════ EQUIPE ════════════════════════════════════ -->
+    <!-- ═══════════════════════ EQUIPE ═══════════════════════════════════ -->
     <section id="equipe" class="team-section">
+        <div class="section-bg-accent accent-purple"></div>
+        
         <div class="container">
-            <h2 class="section-title">Nossa <span>Equipe</span></h2>
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-word">NOSSA</span>
+                    <span class="title-word gradient-text">EQUIPE</span>
+                </h2>
+                <p class="section-subtitle">Os melhores pilotos e engenheiros reunidos para dominar as pistas</p>
+            </div>
+
             <div class="team-grid">
-
-                <article class="team-card">
-                    <img src="./baldo.webp" alt="Arthur Baldo">
+                <!-- TEAM PRINCIPAL -->
+                <article class="team-card team-card-principal" data-type="principal">
+                    <div class="card-image">
+                        <img src="./baldo.webp" alt="Arthur Baldo">
+                        <div class="card-overlay"></div>
+                    </div>
                     <div class="card-content">
+                        <div class="role-badge">Team Principal</div>
                         <h3>Arthur Baldo</h3>
-                        <span class="role">Chefe de Equipe (Team Principal)</span>
-                        <p>Com mais de 15 anos no paddock, Arthur transforma dados em estratégias de vitória. Um mestre da tática, lidera a Windspeed com pulso firme e visão de campeão.</p>
+                        <p>15+ anos no paddock. O arquiteto das vitórias. Transforma dados em estratégias letais.</p>
+                        <div class="card-stats">
+                            <div class="stat">
+                                <span class="stat-value">15+</span>
+                                <span class="stat-name">Anos F1</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">12</span>
+                                <span class="stat-name">Campeões</span>
+                            </div>
+                        </div>
                     </div>
+                    <div class="card-accent"></div>
                 </article>
 
-                <article class="team-card">
-                    <img src="./sarah.webp" alt="Sarah Saraiva">
+                <!-- DIRETORA TÉCNICA -->
+                <article class="team-card team-card-tech" data-type="tech">
+                    <div class="card-image">
+                        <img src="./sarah.webp" alt="Sarah Saraiva">
+                        <div class="card-overlay"></div>
+                    </div>
                     <div class="card-content">
+                        <div class="role-badge">Diretora Técnica</div>
                         <h3>Sarah Saraiva</h3>
-                        <span class="role">Diretora Técnica</span>
-                        <p>O cérebro por trás da máquina. Sarah esculpe o ar, desenvolvendo pacotes aerodinâmicos agressivos que fazem o nosso carro grudar no asfalto em qualquer circuito.</p>
+                        <p>Engenheira de aerodinâmica. Esculpe o ar para ganhar milésimos de segundo.</p>
+                        <div class="card-stats">
+                            <div class="stat">
+                                <span class="stat-value">8</span>
+                                <span class="stat-name">Prêmios</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">0.2s</span>
+                                <span class="stat-name">Ganho Aero</span>
+                            </div>
+                        </div>
                     </div>
+                    <div class="card-accent"></div>
                 </article>
 
-                <article class="team-card">
-                    <img src="./hugocerto.webp" alt="Hugo Garcia">
+                <!-- PILOTO PRINCIPAL -->
+                <article class="team-card team-card-driver" data-type="driver">
+                    <div class="card-image">
+                        <img src="./hugocerto.webp" alt="Hugo Garcia">
+                        <div class="card-overlay"></div>
+                    </div>
                     <div class="card-content">
+                        <div class="role-badge">Piloto Principal</div>
                         <h3>Hugo Garcia</h3>
-                        <span class="role">Piloto Principal</span>
-                        <p>Veterano implacável. Hugo não freia, ele ataca. Famoso por defesas duras e ultrapassagens impossíveis, ele traz a agressividade necessária para o topo do pódio.</p>
+                        <p>Veterano implacável. Não freia, ele ataca. Defesas duras, ultrapassagens impossíveis.</p>
+                        <div class="card-stats">
+                            <div class="stat">
+                                <span class="stat-value">2</span>
+                                <span class="stat-name">Vitórias</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">3</span>
+                                <span class="stat-name">Pódios</span>
+                            </div>
+                        </div>
                     </div>
+                    <div class="card-accent"></div>
                 </article>
 
-                <article class="team-card">
-                    <img src="./erik.webp" alt="Erick Rocha">
+                <!-- PILOTO SECUNDÁRIO -->
+                <article class="team-card team-card-junior" data-type="junior">
+                    <div class="card-image">
+                        <img src="./erik.webp" alt="Erick Rocha">
+                        <div class="card-overlay"></div>
+                    </div>
                     <div class="card-content">
+                        <div class="role-badge">Piloto Secundário</div>
                         <h3>Erick Rocha</h3>
-                        <span class="role">Piloto Secundário</span>
-                        <p>O garoto-prodígio do automobilismo atual. Erick é cirúrgico, rápido e calculista. Maximiza cada milésimo de segundo e gerencia pneus como um veterano.</p>
+                        <p>Garoto-prodígio. Cirúrgico e calculista. Gerencia pneus como um veterano.</p>
+                        <div class="card-stats">
+                            <div class="stat">
+                                <span class="stat-value">8</span>
+                                <span class="stat-name">Voltas Rápidas</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">71.2s</span>
+                                <span class="stat-name">Recorde</span>
+                            </div>
+                        </div>
                     </div>
+                    <div class="card-accent"></div>
                 </article>
-
             </div>
         </div>
     </section>
 
-    <!-- ═══════════════════════ CARRO ═════════════════════════════════════ -->
+    <!-- ═══════════════════════ O CARRO ══════════════════════════════════ -->
     <section id="carro" class="car-section">
+        <div class="section-bg-accent accent-blue"></div>
+        
         <div class="container car-container">
-            <div class="car-image">
-                <img src="./carro certo.png" alt="Carro F1 VTX-01" width="750" height="450">
+            <div class="car-image-wrapper">
+                <div class="car-glow"></div>
+                <img src="./carro certo.png" alt="Wind-Hunter VTX-01" class="car-image">
+                <div class="car-particles"></div>
             </div>
+
             <div class="car-info">
-                <h2 class="section-title">Wind-hunter: <span>VTX-01</span></h2>
-                <p>Nossa arma para a temporada atual. Projetado do zero para explorar o limite do regulamento aerodinâmico.</p>
-                <ul class="specs-list">
-                    <li><strong>Motor:</strong> Apolo-Hunter V12 Turbo Híbrido 1.6L</li>
-                    <li><strong>Chassi:</strong> Monocoque em Fibra de Carbono e Honeycomb</li>
-                    <li><strong>Transmissão:</strong> Semiautomática de 8 marchas + Ré</li>
-                    <li><strong>Downforce:</strong> Aerodinâmica de Efeito Solo Extremo (S-Duct Frontal)</li>
-                    <li><strong>0 a 100 km/h:</strong> ~2.4 segundos</li>
-                </ul>
+                <div class="car-title">
+                    <h2 class="section-title">
+                        <span>Wind-Hunter</span><br>
+                        <span class="gradient-text">VTX-01</span>
+                    </h2>
+                </div>
+
+                <p class="car-intro">A máquina perfeita. Projetada do zero para explorar o limite máximo do regulamento aerodinâmico.</p>
+
+                <div class="specs-container">
+                    <div class="spec-item spec-motor">
+                        <div class="spec-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="spec-text">
+                            <h4>Powertrain</h4>
+                            <p>Apolo-Hunter V12 Turbo Híbrido 1.6L</p>
+                            <span class="spec-detail">1050 HP | Eficiência Máxima</span>
+                        </div>
+                    </div>
+
+                    <div class="spec-item spec-chassis">
+                        <div class="spec-icon">
+                            <i class="fas fa-cube"></i>
+                        </div>
+                        <div class="spec-text">
+                            <h4>Chassis</h4>
+                            <p>Monocoque Fibra de Carbono + Honeycomb</p>
+                            <span class="spec-detail">798 kg | Peso Mínimo</span>
+                        </div>
+                    </div>
+
+                    <div class="spec-item spec-transmission">
+                        <div class="spec-icon">
+                            <i class="fas fa-cog"></i>
+                        </div>
+                        <div class="spec-text">
+                            <h4>Transmission</h4>
+                            <p>Semiautomática 8 Marchas + Ré</p>
+                            <span class="spec-detail">0-100 km/h: 2.4s</span>
+                        </div>
+                    </div>
+
+                    <div class="spec-item spec-aero">
+                        <div class="spec-icon">
+                            <i class="fas fa-wind"></i>
+                        </div>
+                        <div class="spec-text">
+                            <h4>Aerodinâmica</h4>
+                            <p>S-Duct Frontal + Efeito Solo Extremo</p>
+                            <span class="spec-detail">Downforce Máximo</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="car-performance">
+                    <h3>Performance Metrics</h3>
+                    <div class="performance-bars">
+                        <div class="perf-bar">
+                            <label>Velocidade Máxima</label>
+                            <div class="bar-container">
+                                <div class="bar-fill" style="width: 95%"></div>
+                            </div>
+                            <span>370 km/h</span>
+                        </div>
+                        <div class="perf-bar">
+                            <label>Aceleração</label>
+                            <div class="bar-container">
+                                <div class="bar-fill" style="width: 98%"></div>
+                            </div>
+                            <span>2.4s (0-100)</span>
+                        </div>
+                        <div class="perf-bar">
+                            <label>Aerodinâmica</label>
+                            <div class="bar-container">
+                                <div class="bar-fill" style="width: 100%"></div>
+                            </div>
+                            <span>Máxima</span>
+                        </div>
+                        <div class="perf-bar">
+                            <label>Eficiência Combustível</label>
+                            <div class="bar-container">
+                                <div class="bar-fill" style="width: 87%"></div>
+                            </div>
+                            <span>Excelente</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- ═══════════════════════ STATS / CONTADOR DE VOLTAS ════════════════ -->
-    <!--
-        SEÇÃO DE ESTATÍSTICAS DA TEMPORADA
-        Os valores são carregados dinamicamente pelo script.js via API.getTeamStats().
-        Os IDs (stat-laps, stat-races, etc.) são o contrato entre o HTML e o JS —
-        não altere os IDs sem atualizar o counterMap em script.js.
-    -->
+    <!-- ═══════════════════════ STATS ════════════════════════════════════ -->
     <section id="stats" class="stats-section">
+        <div class="section-bg-accent accent-pink"></div>
+        
         <div class="container">
-            <h2 class="section-title">Temporada <span>em Números</span></h2>
-            <p class="stats-subtitle">Dados acumulados em 2026 · Atualizado em tempo real</p>
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span>TEMPORADA</span><br>
+                    <span class="gradient-text">EM NÚMEROS</span>
+                </h2>
+                <p class="section-subtitle">Dados acumulados em 2026 · Atualizado em tempo real</p>
+            </div>
 
             <div class="stats-grid">
-
-                <!-- DESTAQUE: Contador de Voltas -->
-                <div class="stat-card stat-card--featured">
-                    <div class="stat-icon">◎</div>
-                    <span class="stat-value" id="stat-laps">—</span>
-                    <span class="stat-label">Voltas Completadas<br>na Temporada</span>
-                    <div class="stat-track-line"></div>
+                <div class="stat-card stat-card--featured" data-stat="laps">
+                    <div class="stat-number" id="stat-laps">—</div>
+                    <div class="stat-label">Voltas Completadas</div>
+                    <div class="stat-meta">na Temporada</div>
+                    <div class="stat-neon-border"></div>
                 </div>
 
-                <div class="stat-card">
-                    <div class="stat-icon">🏁</div>
-                    <span class="stat-value" id="stat-races">—</span>
-                    <span class="stat-label">Corridas Disputadas</span>
+                <div class="stat-card" data-stat="races">
+                    <div class="stat-number" id="stat-races">—</div>
+                    <div class="stat-label">Corridas</div>
+                    <div class="stat-meta">Disputadas</div>
                 </div>
 
-                <div class="stat-card">
-                    <div class="stat-icon">🏆</div>
-                    <span class="stat-value" id="stat-wins">—</span>
-                    <span class="stat-label">Vitórias</span>
+                <div class="stat-card" data-stat="wins">
+                    <div class="stat-number" id="stat-wins">—</div>
+                    <div class="stat-label">Vitórias</div>
+                    <div class="stat-meta">Pódio Ouro</div>
                 </div>
 
-                <div class="stat-card">
-                    <div class="stat-icon">🥇</div>
-                    <span class="stat-value" id="stat-podiums">—</span>
-                    <span class="stat-label">Pódios</span>
+                <div class="stat-card" data-stat="podiums">
+                    <div class="stat-number" id="stat-podiums">—</div>
+                    <div class="stat-label">Pódios</div>
+                    <div class="stat-meta">Total na Temporada</div>
                 </div>
-
             </div>
 
             <div class="stats-cta">
-                <a href="dashboard.html" class="btn-cta">Ver Dashboard Completo →</a>
+                <a href="dashboard.html" class="btn-primary">
+                    <span>Ver Dashboard Completo</span>
+                    <i class="fas fa-chart-line"></i>
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- ═══════════════════════ FANZONE ═══════════════════════════════════ -->
+    <!-- ═══════════════════════ BLOG / NOTÍCIAS ════════════════════════════ -->
+    <section id="blog" class="blog-section">
+        <div class="section-bg-accent accent-purple"></div>
+        
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span>ÚLTIMAS</span><br>
+                    <span class="gradient-text">NOTÍCIAS</span>
+                </h2>
+                <p class="section-subtitle">Acompanhe os destaques da Windspeed Racing</p>
+            </div>
+
+            <div class="blog-grid">
+                <article class="blog-card">
+                    <div class="blog-image" style="background: linear-gradient(135deg, #ff2e88, #8a2be2);">
+                        <span class="blog-date">15 Jun</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-category">Corrida</div>
+                        <h3>Hugo Garcia vence na Hungria com estratégia perfeita</h3>
+                        <p>Com uma pit stop estratégica no momento certo, Hugo conquistou sua segunda vitória da temporada no circuito de Hungaroring.</p>
+                        <a href="#" class="read-more">Ler mais <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <article class="blog-card">
+                    <div class="blog-image" style="background: linear-gradient(135deg, #007bff, #00e676);">
+                        <span class="blog-date">12 Jun</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-category">Técnico</div>
+                        <h3>VTX-01 recebe upgrade aerodinâmico revolucionário</h3>
+                        <p>Sarah Saraiva apresenta as melhorias que aumentaram o downforce em 12% sem aumento de arrasto. Engenharia de ponta.</p>
+                        <a href="#" class="read-more">Ler mais <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <article class="blog-card">
+                    <div class="blog-image" style="background: linear-gradient(135deg, #ff1e1e, #ffaa00);">
+                        <span class="blog-date">10 Jun</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-category">Piloto</div>
+                        <h3>Erick Rocha marca volta mais rápida no treino de Barcelona</h3>
+                        <p>O jovem piloto impressiona com consistência e rapidez, sinalizando preparação para as próximas provas.</p>
+                        <a href="#" class="read-more">Ler mais <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════ GALERIA ══════════════════════════════════ -->
+    <section id="galeria" class="gallery-section">
+        <div class="section-bg-accent accent-blue"></div>
+        
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span>GALERIA</span><br>
+                    <span class="gradient-text">VISUAL</span>
+                </h2>
+                <p class="section-subtitle">Momentos icônicos da Windspeed Racing</p>
+            </div>
+
+            <div class="gallery-grid">
+                <div class="gallery-item gallery-item-large">
+                    <img src="./carro certo.png" alt="VTX-01 em ação">
+                    <div class="gallery-overlay">
+                        <h3>Carro em Ação</h3>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="./hugocerto.webp" alt="Hugo Garcia">
+                    <div class="gallery-overlay">
+                        <h3>Hugo Garcia</h3>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="./erik.webp" alt="Erick Rocha">
+                    <div class="gallery-overlay">
+                        <h3>Erick Rocha</h3>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="./sarah.webp" alt="Sarah Saraiva">
+                    <div class="gallery-overlay">
+                        <h3>Sarah Saraiva</h3>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="./baldo.webp" alt="Arthur Baldo">
+                    <div class="gallery-overlay">
+                        <h3>Arthur Baldo</h3>
+                    </div>
+                </div>
+                <div class="gallery-item gallery-item-tall">
+                    <div class="gallery-placeholder" style="background: linear-gradient(135deg, #8a2be2, #ff2e88);">
+                        <i class="fas fa-trophy"></i>
+                        <p>Troféu Campeão</p>
+                    </div>
+                    <div class="gallery-overlay">
+                        <h3>Vitória</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════ TIMELINE ═════════════════════════════════ -->
+    <section id="timeline" class="timeline-section">
+        <div class="section-bg-accent accent-pink"></div>
+        
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span>HISTÓRIA</span><br>
+                    <span class="gradient-text">DA WINDSPEED</span>
+                </h2>
+                <p class="section-subtitle">A jornada que nos levou ao topo</p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">2018</span>
+                        <h3>Fundação</h3>
+                        <p>Arthur Baldo funda a Windspeed Racing com uma visão clara: dominar a F1 com inovação e precisão.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">2019</span>
+                        <h3>Primeira Temporada</h3>
+                        <p>Estreia na F1 com o carro WS-01. Resultados modestos mas promissores para uma equipe novata.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">2020</span>
+                        <h3>Contratação de Sarah Saraiva</h3>
+                        <p>A engenheira alemã de aerodinâmica se junta à equipe, trazendo expertise de times topo 3.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">2022</span>
+                        <h3>Primeiro Pódio</h3>
+                        <p>Hugo Garcia conquista o terceiro lugar em Barcelona, marcando o primeiro pódio da Windspeed.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">2024</span>
+                        <h3>Primeira Vitória</h3>
+                        <p>Hugo vence em Jeddah. Um momento histórico que marca a consolidação da Windspeed como força competitiva.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">2026</span>
+                        <h3>Domínio Total</h3>
+                        <p>Com o VTX-01 e uma equipe completa, a Windspeed compete pelo campeonato mundial.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════ FANZONE ══════════════════════════════════ -->
     <section id="fanzone" class="fanzone-section">
+        <div class="section-bg-accent accent-purple"></div>
+        
         <div class="container text-center">
-            <h2 class="section-title">Aqueçam os Motores</h2>
-            <!-- Subtítulo atualizado dinamicamente pelo script.js -->
-            <p class="fanzone-subtitle">Contagem regressiva para o próximo Grande Prêmio</p>
-            <!-- Nome do GP atualizado dinamicamente -->
-            <p class="gp-name" style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem;"></p>
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span>AQUEÇAM</span><br>
+                    <span class="gradient-text">OS MOTORES</span>
+                </h2>
+                <p class="section-subtitle">Contagem regressiva para o próximo Grande Prêmio</p>
+            </div>
+
+            <div class="next-gp-info">
+                <h3 id="gp-name">Próxima Corrida</h3>
+                <p id="gp-date"></p>
+            </div>
 
             <div class="countdown-container">
                 <div class="time-box">
-                    <span id="days">00</span>
-                    <span class="label">Dias</span>
+                    <span id="days" class="time-value">00</span>
+                    <span class="time-label">Dias</span>
                 </div>
                 <div class="time-box">
-                    <span id="hours">00</span>
-                    <span class="label">Horas</span>
+                    <span id="hours" class="time-value">00</span>
+                    <span class="time-label">Horas</span>
                 </div>
                 <div class="time-box">
-                    <span id="minutes">00</span>
-                    <span class="label">Minutos</span>
+                    <span id="minutes" class="time-value">00</span>
+                    <span class="time-label">Minutos</span>
                 </div>
                 <div class="time-box">
-                    <span id="seconds">00</span>
-                    <span class="label">Segundos</span>
+                    <span id="seconds" class="time-value">00</span>
+                    <span class="time-label">Segundos</span>
+                </div>
+            </div>
+
+            <div class="fanzone-extra">
+                <div class="fan-card">
+                    <i class="fas fa-heart"></i>
+                    <h4>Segue a Gente</h4>
+                    <p>@windspeed.racing</p>
+                </div>
+                <div class="fan-card">
+                    <i class="fas fa-ticket-alt"></i>
+                    <h4>Ingressos</h4>
+                    <p>Garanta seu lugar no circuito</p>
+                </div>
+                <div class="fan-card">
+                    <i class="fas fa-shopping-bag"></i>
+                    <h4>Merchandising</h4>
+                    <p>Vestiário Windspeed Racing</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ═══════════════════════ FOOTER ════════════════════════════════════ -->
-    <footer>
+    <!-- ═══════════════════════ FOOTER ═══════════════════════════════════ -->
+    <footer class="footer">
         <div class="container footer-content">
-            <div class="footer-logo">
-                <h2>Windspeed <span>RACING</span></h2>
+            <div class="footer-section">
+                <h3>Windspeed <span>RACING</span></h3>
+                <p>A força que está redefinindo a Fórmula 1. Domínio através da inovação e precisão.</p>
+                <div class="social-links">
+                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="#" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                </div>
             </div>
-            <div class="social-links">
-                <a href="#">Instagram</a>
-                <a href="#">X (Twitter)</a>
-                <a href="#">YouTube</a>
-                <a href="#">TikTok</a>
+
+            <div class="footer-section">
+                <h4>Navegação</h4>
+                <ul>
+                    <li><a href="#equipe">Equipe</a></li>
+                    <li><a href="#carro">O Carro</a></li>
+                    <li><a href="#stats">Temporada</a></li>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Recursos</h4>
+                <ul>
+                    <li><a href="#blog">Notícias</a></li>
+                    <li><a href="#galeria">Galeria</a></li>
+                    <li><a href="#timeline">História</a></li>
+                    <li><a href="#fanzone">Fanzone</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Contato</h4>
+                <ul>
+                    <li><a href="mailto:info@windspeedracing.com">info@windspeedracing.com</a></li>
+                    <li><a href="tel:+55-11-99999-9999">+55 (11) 99999-9999</a></li>
+                    <li>São Paulo, Brasil</li>
+                </ul>
             </div>
         </div>
+
         <div class="footer-bottom">
-            <p>&copy; 2026 Scuderia Windspeed Racing F1 Team. Todos os direitos reservados. (Site Fictício)</p>
+            <p>&copy; 2026 Windspeed Racing F1 Team. Todos os direitos reservados. | <a href="#">Privacidade</a> | <a href="#">Termos</a></p>
         </div>
     </footer>
 
-    <!-- api-mock.js deve vir ANTES de script.js -->
+    <!-- Scripts -->
     <script src="api-mock.js"></script>
     <script src="script.js"></script>
 </body>
