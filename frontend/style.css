@@ -1047,6 +1047,14 @@ ul {
     overflow: hidden;
 }
 
+.blog-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
 .blog-image::after {
     content: '';
     position: absolute;
@@ -1131,7 +1139,7 @@ ul {
 
 .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
     margin-bottom: 40px;
 }
@@ -1140,7 +1148,7 @@ ul {
     position: relative;
     overflow: hidden;
     border-radius: 10px;
-    aspect-ratio: 1;
+    aspect-ratio: 3 / 4;
     cursor: pointer;
     animation: fadeInUp 0.8s ease-out;
 }
@@ -1154,17 +1162,18 @@ ul {
 
 .gallery-item-large {
     grid-column: span 2;
-    grid-row: span 2;
+    aspect-ratio: 16 / 10;
 }
 
 .gallery-item-tall {
-    grid-row: span 2;
+    aspect-ratio: 3 / 4;
 }
 
 .gallery-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center top;
     transition: var(--transition-smooth);
 }
 
